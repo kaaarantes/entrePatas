@@ -3,7 +3,7 @@ package com.br.entrePatas.entity;
 public class Acompanhamento {
 	
 	private Integer idAcompanhamento;
-	//private Pessoa idPessoa;
+	private Pessoa idPessoa;
 	private Animal idAnimal;
 	private String observacao;
 	private Integer flgStatus;
@@ -13,6 +13,12 @@ public class Acompanhamento {
 	}
 	public void setIdAcompanhamento(Integer idAcompanhamento) {
 		this.idAcompanhamento = idAcompanhamento;
+	}
+	public Pessoa getIdPessoa() {
+		return idPessoa;
+	}
+	public void setIdPessoa(Pessoa idPessoa) {
+		this.idPessoa = idPessoa;
 	}
 	public Animal getIdAnimal() {
 		return idAnimal;
