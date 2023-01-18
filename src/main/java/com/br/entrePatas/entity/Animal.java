@@ -2,17 +2,52 @@ package com.br.entrePatas.entity;
 
 import java.util.Date;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "ANIMAL")
 public class Animal {
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(nullable = false, name = "ID_ANIMAL")
 	private Integer idAnimal;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ID_RACA")
 	private Raca idRaca;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ID_ESPECIE")
 	private Especie idEspecie;
+	
+	@Column(name = "NOME")
 	private String nome;
-	private Date dtNascimento;
+	
+	@Column(name = "NASCIMENTO")
+	private Date nascimento;
+	
+	@Column(name = "PORTE")
 	private String porte;
+	
+	@Column(name = "SEXO")
 	private String sexo;
+	
+	@Column(name = "FLG_VACINADO")
 	private Integer flgVacinado;
+	
+	@Column(name = "FLG_CASTRADO")
 	private Integer flgCastrado;
+	
+	@Column(nullable = false, name = "FLG_STATUS")
 	private Integer flgStatus;
 	
 	public Integer getIdAnimal() {
@@ -39,11 +74,11 @@ public class Animal {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	public Date getDtNascimento() {
-		return dtNascimento;
+	public Date getNascimento() {
+		return nascimento;
 	}
-	public void setDtNascimento(Date dtNascimento) {
-		this.dtNascimento = dtNascimento;
+	public void setNascimento(Date nascimento) {
+		this.nascimento = nascimento;
 	}
 	public String getPorte() {
 		return porte;

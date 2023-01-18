@@ -1,16 +1,33 @@
 package com.br.entrePatas.entity;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@Entity
 public class PessoaEndereco {
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer idPessoaEndereco;
+	
 	private Cidade idCidade;
+	
 	private Pais idPais;
+	
 	private String logradouro;
+	
 	private String bairro;
+	
 	private String numero;
+	
 	private String complemento;
+	
 	private Integer cep;
+	
 	private String observacao;
+	
 	private Integer flgStatus;
 	
 	public Integer getIdPessoaEndereco() {

@@ -1,11 +1,31 @@
 package com.br.entrePatas.entity;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "PESSOA_TELEFONE")
 public class PessoaTelefone {
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(nullable = false, name = "ID_PESSOA_TELEFONE")
 	private Integer idPessoaTelefone;
+	
+	@Column(nullable = false, name = "TELEFONE")
 	private String telefone;
+	
+	@Column(nullable = false, name = "CONTATO")
 	private String contato;
+	
+	@Column(name = "OBSERVACAO")
 	private String observacao;
+	
+	@Column(nullable = false, name = "FLG_STATUS")
 	private Integer flgStatus;
 	
 	public Integer getIdPessoaTelefone() {

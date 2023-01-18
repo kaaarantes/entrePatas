@@ -1,11 +1,33 @@
 package com.br.entrePatas.entity;
 
+
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "PAIS")
 public class Pais {
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(nullable = false, name = "ID_PAIS")
 	private Integer idPais;
+	
+	@Column(nullable = false, name = "SIGLA")
 	private String sigla;
+	
+	@Column(nullable = false, name = "DESCRICAO")
 	private String descricao;
+	
+	@Column(nullable = false, name = "NR_BACEN")
 	private Integer nrBACEN;
+	
+	@Column(nullable = false, name = "FLG_STATUS")
 	private Integer flgStatus;
 	
 	public Integer getIdPais() {

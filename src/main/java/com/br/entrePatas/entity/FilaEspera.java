@@ -1,12 +1,32 @@
 package com.br.entrePatas.entity;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "FILA_ESPERA")
 public class FilaEspera {
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(nullable = false, name = "ID_FILA_ESPERA")
 	private Integer idFilaEspera;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ID_PESSOA")
     private Pessoa idPessoa;
-	private Animal idAnimal;
-	private String anexo;
+    
+    @Column(name = "OBSERVACAO")
 	private String observacao;
+	
+    @Column(nullable = false, name = "FLG_STATUS")
 	private Integer flgStatus;
 	
 	public Integer getIdFilaEspera() {
@@ -20,18 +40,6 @@ public class FilaEspera {
 	}
 	public void setIdFilaEspera(Integer idFilaEspera) {
 		this.idFilaEspera = idFilaEspera;
-	}
-	public Animal getIdAnimal() {
-		return idAnimal;
-	}
-	public void setIdAnimal(Animal idAnimal) {
-		this.idAnimal = idAnimal;
-	}
-	public String getAnexo() {
-		return anexo;
-	}
-	public void setAnexo(String anexo) {
-		this.anexo = anexo;
 	}
 	public String getObservacao() {
 		return observacao;
