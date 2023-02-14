@@ -14,16 +14,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.br.entrePatas.model.Pessoa;
+import com.br.entrePatas.model.UF;
 import com.br.entrePatas.repository.PessoaRepository;
+import com.br.entrePatas.repository.UFRepository;
 @RestController
-@RequestMapping({"/pessoas"})
-public class PessoaController {
+@RequestMapping({"/ufs"})
+public class UFController {
 
 	@Autowired
-	private PessoaRepository repository;
+	private UFRepository repository;
 	
-	PessoaController(PessoaRepository pessoaRepository) {
-		this.repository = pessoaRepository;
+	UFController(UFRepository ufRepository) {
+		this.repository = ufRepository;
 	}
 	
 	@GetMapping
@@ -31,41 +33,38 @@ public class PessoaController {
 	   return repository.findAll();
 	}
 	
-	@GetMapping(path = {"/{idPessoa}"})
-	public ResponseEntity findById(@PathVariable Integer idPessoa){
-	   return repository.findById(idPessoa)
+	@GetMapping(path = {"/{idUF}"})
+	public ResponseEntity findById(@PathVariable Integer idUF){
+	   return repository.findById(idUF)
 	           .map(record -> ResponseEntity.ok().body(record))
 	           .orElse(ResponseEntity.notFound().build());
 	}
 	
 	@PostMapping
-	public Pessoa create(@RequestBody Pessoa pessoa){
-	   return repository.save(pessoa);
+	public UF create(@RequestBody UF uf){
+	   return repository.save(uf);
 	}
 	
-	@PutMapping(value="/{idPessoa}")
-	public ResponseEntity update(@PathVariable("idPessoa") Integer idPessoa,
-	                                      @RequestBody Pessoa pessoa) {
-	   return repository.findById(idPessoa)
+	@PutMapping(value="/{idUF}")
+	public ResponseEntity update(@PathVariable("idUF") Integer idUF,
+	                                      @RequestBody UF uf) {
+	   return repository.findById(idUF)
 	           .map(record -> {
-	               record.setNome(pessoa.getNome());
-	               record.setCpf(pessoa.getCpf());
-	               record.setRg(pessoa.getRg());
-	               record.setDt_nascimento(pessoa.getDt_nascimento());
-	               record.setEmail(pessoa.getEmail());
-	               record.setFlgLarTemporario(pessoa.getFlgLarTemporario());
-	               record.setFlgStatus(pessoa.getFlgStatus());
+	               record.setDescricao(uf.getDescricao());
+	               record.setUf(uf.getUf());
+	               record.setNrIBGE(uf.getNrIBGE());
+	               record.setFlgStatus(uf.getFlgStatus());
 
-	               Pessoa updated = repository.save(record);
+	               UF updated = repository.save(record);
 	               return ResponseEntity.ok().body(updated);
 	           }).orElse(ResponseEntity.notFound().build());
 	}
 	
-	@DeleteMapping(path ={"/{idPessoa}"})
-	public ResponseEntity <?> delete(@PathVariable Integer idPessoa) {
-	   return repository.findById(idPessoa)
+	@DeleteMapping(path ={"/{idUF}"})
+	public ResponseEntity <?> delete(@PathVariable Integer idUF) {
+	   return repository.findById(idUF)
 	           .map(record -> {
-	               repository.deleteById(idPessoa);
+	               repository.deleteById(idUF);
 	               return ResponseEntity.ok().build();
 	           }).orElse(ResponseEntity.notFound().build());
 	}

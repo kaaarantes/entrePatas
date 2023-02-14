@@ -2,17 +2,17 @@ package com.br.entrePatas.model;
 
 import java.io.Serializable;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "ACOMPANHAMENTO")
@@ -24,13 +24,13 @@ public class Acompanhamento  implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(nullable = false, name = "ID_ACOMPANHAMENTO")
 	private Integer idAcompanhamento;
-	
+	/*
 	@OneToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL,optional = true)
 	@JoinColumn(name = "ID_PESSOA")
 	private Pessoa idPessoa;
 	
 	@OneToMany(mappedBy="acompanhamento", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-	private Animal idAnimal;
+	private Animal idAnimal;*/
 	
 	@Column(name = "OBSERVACAO")
 	private String observacao;
@@ -44,7 +44,7 @@ public class Acompanhamento  implements Serializable {
 	public void setIdAcompanhamento(Integer idAcompanhamento) {
 		this.idAcompanhamento = idAcompanhamento;
 	}
-	public Pessoa getIdPessoa() {
+	/*public Pessoa getIdPessoa() {
 		return idPessoa;
 	}
 	public void setIdPessoa(Pessoa idPessoa) {
@@ -55,7 +55,7 @@ public class Acompanhamento  implements Serializable {
 	}
 	public void setIdAnimal(Animal idAnimal) {
 		this.idAnimal = idAnimal;
-	}
+	}*/
 	public String getObservacao() {
 		return observacao;
 	}

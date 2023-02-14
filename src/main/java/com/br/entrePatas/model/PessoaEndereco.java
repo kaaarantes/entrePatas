@@ -2,15 +2,15 @@ package com.br.entrePatas.model;
 
 import java.io.Serializable;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "PESSOA_ENDERECO")
@@ -24,8 +24,12 @@ public class PessoaEndereco implements Serializable {
 	private Integer idPessoaEndereco;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ID_PESSOA")
+    private Pessoa idPessoa;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ID_CIDADE")
-	private Cidade idCidade;
+	private Cidade cidade;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ID_PAIS")
@@ -58,11 +62,17 @@ public class PessoaEndereco implements Serializable {
 	public void setIdPessoaEndereco(Integer idPessoaEndereco) {
 		this.idPessoaEndereco = idPessoaEndereco;
 	}
-	public Cidade getIdCidade() {
-		return idCidade;
+	public Pessoa getIdPessoa() {
+		return idPessoa;
 	}
-	public void setIdCidade(Cidade idCidade) {
-		this.idCidade = idCidade;
+	public void setIdPessoa(Pessoa idPessoa) {
+		this.idPessoa = idPessoa;
+	}
+	public Cidade getCidade() {
+		return cidade;
+	}
+	public void setIdCidade(Cidade cidade) {
+		this.cidade = cidade;
 	}
 	public Pais getIdPais() {
 		return idPais;

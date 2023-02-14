@@ -2,17 +2,17 @@ package com.br.entrePatas.model;
 
 import java.io.Serializable;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "LAR_TEMPORARIO")
@@ -25,12 +25,12 @@ public class LarTemporario  implements Serializable {
 	@Column(nullable = false, name = "ID_LAR_TEMPORARIO")
 	private Integer idLarTemporario;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	/*@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ID_PESSOA")
 	private Pessoa idPessoa;
 	
 	@OneToMany(mappedBy="larTemporario", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-	private Animal idAnimal;
+	private Animal idAnimal;*/
 	
 	@Column(name = "OBSERVACAO")
 	private String observacao;
@@ -44,7 +44,7 @@ public class LarTemporario  implements Serializable {
 	public void setIdLarTemporario(Integer idLarTemporario) {
 		this.idLarTemporario = idLarTemporario;
 	}
-	public Pessoa getIdPessoa() {
+	/*public Pessoa getIdPessoa() {
 		return idPessoa;
 	}
 	public void setIdPessoa(Pessoa idPessoa) {
@@ -55,7 +55,7 @@ public class LarTemporario  implements Serializable {
 	}
 	public void setIdAnimal(Animal idAnimal) {
 		this.idAnimal = idAnimal;
-	}
+	}*/
 	public String getObservacao() {
 		return observacao;
 	}

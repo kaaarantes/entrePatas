@@ -1,20 +1,19 @@
 package com.br.entrePatas.model;
 
 import java.util.Date;
+import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import lombok.NoArgsConstructor;
 
-@Entity
+@jakarta.persistence.Entity
 @Table(name = "PESSOA")
 public class Pessoa {
 	
@@ -23,46 +22,54 @@ public class Pessoa {
 	@Column(nullable = false, name = "ID_PESSOA")
 	private Integer idPessoa;
 	
-	@OneToMany(mappedBy="pessoa", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-	private PessoaEndereco idPessoaEndereco;
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<PessoaEndereco> pessoaEndereco;
 	
-	@OneToMany(mappedBy="pessoa", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private PessoaTelefone idPessoaTelefone;
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<PessoaTelefone> pessoaTelefone;
 	
 	@Column(nullable = false, name = "NOME")
 	private String nome;
 	
-	@Column(nullable = false, name = "NASCIMENTO")
+	@Column(nullable = true, name = "NASCIMENTO")
 	private Date nascimento;
 	
-	@Column(nullable = false, name = "CPF")
+	@Column(nullable = true, name = "CPF")
 	private String cpf;
 	
-	@Column(nullable = false, name = "RG")
+	@Column(nullable = true, name = "RG")
 	private String rg;
 	
 	@Column(name = "EMAIL")
 	private String email;
 	
-	@Column(nullable = false, name = "FLG_LAR_TEMPORARIO")
+	@Column(nullable = true, name = "FLG_LAR_TEMPORARIO")
 	private Integer flgLarTemporario;
 	
-	@Column(nullable = false, name = "FLG_STATUS")
+	@Column(nullable = true, name = "FLG_STATUS")
 	private Integer flgStatus;
 	
-	
-	
+
 	public Integer getIdPessoa() {
 		return idPessoa;
 	}
 	public void setIdPessoa(Integer idPessoa) {
 		this.idPessoa = idPessoa;
 	}
-	public PessoaEndereco getIdPessoaEndereco() {
-		return idPessoaEndereco;
+	public List<PessoaEndereco> getPessoaEndereco() {
+		return pessoaEndereco;
 	}
-	public void setIdPessoaEndereco(PessoaEndereco idPessoaEndereco) {
-		this.idPessoaEndereco = idPessoaEndereco;
+	
+	public List<PessoaTelefone> getPessoaTelefone() {
+		return pessoaTelefone;
+	}
+
+	public void setPessoaTelefone(List<PessoaTelefone> pessoaTelefone) {
+		this.pessoaTelefone = pessoaTelefone;
+	}
+
+	public void setPessoaEndereco(List<PessoaEndereco> pessoaEndereco) {
+		this.pessoaEndereco = pessoaEndereco;
 	}
 	public String getNome() {
 		return nome;

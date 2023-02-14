@@ -1,13 +1,17 @@
 package com.br.entrePatas.model;
 
 import java.io.Serializable;
+import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "ESPECIE")
@@ -20,6 +24,9 @@ public class Especie  implements Serializable {
 	@Column(nullable = false, name = "ID_ESPECIE")
 	private Integer idEspecie;
 	
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Animal> animal;
+	
 	@Column(nullable = false, name = "ESPECIE")
 	private String especie;
 	
@@ -31,6 +38,12 @@ public class Especie  implements Serializable {
 	}
 	public void setIdEspecie(Integer idEspecie) {
 		this.idEspecie = idEspecie;
+	}
+	public List<Animal> getAnimal() {
+		return animal;
+	}
+	public void setAnimal(List<Animal> animal) {
+		this.animal = animal;
 	}
 	public String getEspecie() {
 		return especie;

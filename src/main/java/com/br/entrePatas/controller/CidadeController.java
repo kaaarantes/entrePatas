@@ -13,17 +13,21 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.br.entrePatas.model.Cidade;
 import com.br.entrePatas.model.Pessoa;
+import com.br.entrePatas.model.UF;
+import com.br.entrePatas.repository.CidadeRepository;
 import com.br.entrePatas.repository.PessoaRepository;
+import com.br.entrePatas.repository.UFRepository;
 @RestController
-@RequestMapping({"/pessoas"})
-public class PessoaController {
+@RequestMapping({"/cidades"})
+public class CidadeController {
 
 	@Autowired
-	private PessoaRepository repository;
+	private CidadeRepository repository;
 	
-	PessoaController(PessoaRepository pessoaRepository) {
-		this.repository = pessoaRepository;
+	CidadeController(CidadeRepository cidadeRepository) {
+		this.repository = cidadeRepository;
 	}
 	
 	@GetMapping
@@ -31,41 +35,38 @@ public class PessoaController {
 	   return repository.findAll();
 	}
 	
-	@GetMapping(path = {"/{idPessoa}"})
-	public ResponseEntity findById(@PathVariable Integer idPessoa){
-	   return repository.findById(idPessoa)
+	@GetMapping(path = {"/{idCidade}"})
+	public ResponseEntity findById(@PathVariable Integer idCidade){
+	   return repository.findById(idCidade)
 	           .map(record -> ResponseEntity.ok().body(record))
 	           .orElse(ResponseEntity.notFound().build());
 	}
 	
 	@PostMapping
-	public Pessoa create(@RequestBody Pessoa pessoa){
-	   return repository.save(pessoa);
+	public Cidade create(@RequestBody Cidade cidade){
+	   return repository.save(cidade);
 	}
 	
-	@PutMapping(value="/{idPessoa}")
-	public ResponseEntity update(@PathVariable("idPessoa") Integer idPessoa,
-	                                      @RequestBody Pessoa pessoa) {
-	   return repository.findById(idPessoa)
+	@PutMapping(value="/{idCidade}")
+	public ResponseEntity update(@PathVariable("idCidade") Integer idCidade,
+	                                      @RequestBody Cidade cidade) {
+	   return repository.findById(idCidade)
 	           .map(record -> {
-	               record.setNome(pessoa.getNome());
-	               record.setCpf(pessoa.getCpf());
-	               record.setRg(pessoa.getRg());
-	               record.setDt_nascimento(pessoa.getDt_nascimento());
-	               record.setEmail(pessoa.getEmail());
-	               record.setFlgLarTemporario(pessoa.getFlgLarTemporario());
-	               record.setFlgStatus(pessoa.getFlgStatus());
+	               record.setCidade(cidade.getCidade());
+	               record.setIdUF(cidade.getIdUF());
+	               record.setNrIBGE(cidade.getNrIBGE());
+	               record.setFlgStatus(cidade.getFlgStatus());
 
-	               Pessoa updated = repository.save(record);
+	               Cidade updated = repository.save(record);
 	               return ResponseEntity.ok().body(updated);
 	           }).orElse(ResponseEntity.notFound().build());
 	}
 	
-	@DeleteMapping(path ={"/{idPessoa}"})
-	public ResponseEntity <?> delete(@PathVariable Integer idPessoa) {
-	   return repository.findById(idPessoa)
+	@DeleteMapping(path ={"/{idCidade}"})
+	public ResponseEntity <?> delete(@PathVariable Integer idCidade) {
+	   return repository.findById(idCidade)
 	           .map(record -> {
-	               repository.deleteById(idPessoa);
+	               repository.deleteById(idCidade);
 	               return ResponseEntity.ok().build();
 	           }).orElse(ResponseEntity.notFound().build());
 	}

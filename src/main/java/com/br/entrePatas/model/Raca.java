@@ -1,13 +1,17 @@
 package com.br.entrePatas.model;
 
 import java.io.Serializable;
+import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "RACA")
@@ -19,6 +23,9 @@ public class Raca  implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(nullable = false, name = "ID_RACA")
 	private Integer idRaca;
+	
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Animal> animal;
 	
 	@Column(nullable = false, name = "RACA")
 	private String raca;
@@ -34,6 +41,12 @@ public class Raca  implements Serializable {
 	}
 	public void setIdRaca(Integer idRaca) {
 		this.idRaca = idRaca;
+	}
+	public List<Animal> getAnimal() {
+		return animal;
+	}
+	public void setAnimal(List<Animal> animal) {
+		this.animal = animal;
 	}
 	public String getRaca() {
 		return raca;
