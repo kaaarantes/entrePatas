@@ -1,5 +1,6 @@
 package com.br.entrePatas.controller;
 
+import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,62 +13,47 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.br.entrePatas.model.Pessoa;
-import com.br.entrePatas.repository.PessoaRepository;
+import com.br.entrePatas.service.PessoaService;
+
 @RestController
 @RequestMapping({"/pessoas"})
 public class PessoaController {
 
 	@Autowired
-	private PessoaRepository repository;
+	private PessoaService service;
 	
-	PessoaController(PessoaRepository pessoaRepository) {
-		this.repository = pessoaRepository;
+	@GetMapping(value = "/{idPessoa}")
+	public ResponseEntity<Pessoa> findById(@PathVariable Integer idPessoa) {
+		Pessoa obj = service.findById(idPessoa);
+		return ResponseEntity.ok().body(obj);
 	}
 	
 	@GetMapping
-	public List findAll(){
-	   return repository.findAll();
-	}
-	
-	@GetMapping(path = {"/{idPessoa}"})
-	public ResponseEntity findById(@PathVariable Integer idPessoa){
-	   return repository.findById(idPessoa)
-	           .map(record -> ResponseEntity.ok().body(record))
-	           .orElse(ResponseEntity.notFound().build());
+	public ResponseEntity<List<Pessoa>> findAll() {
+		List<Pessoa> list = service.findAll();
+		return ResponseEntity.ok().body(list);
 	}
 	
 	@PostMapping
-	public Pessoa create(@RequestBody Pessoa pessoa){
-	   return repository.save(pessoa);
+	public ResponseEntity<Pessoa> create(@RequestBody Pessoa pessoa) {
+		Pessoa newObj = service.create(pessoa);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{idPessoa}").buildAndExpand(newObj.getIdPessoa()).toUri();
+		return ResponseEntity.created(uri).build();
 	}
 	
-	@PutMapping(value="/{idPessoa}")
-	public ResponseEntity update(@PathVariable("idPessoa") Integer idPessoa,
-	                                      @RequestBody Pessoa pessoa) {
-	   return repository.findById(idPessoa)
-	           .map(record -> {
-	               record.setNome(pessoa.getNome());
-	               record.setCpf(pessoa.getCpf());
-	               record.setRg(pessoa.getRg());
-	               record.setDt_nascimento(pessoa.getDt_nascimento());
-	               record.setEmail(pessoa.getEmail());
-	               record.setFlgLarTemporario(pessoa.getFlgLarTemporario());
-	               record.setFlgStatus(pessoa.getFlgStatus());
+	@PutMapping(value = "/{idPessoa}")
+	public ResponseEntity<Pessoa> update(@PathVariable Integer idPessoa, @RequestBody Pessoa pessoa) {
+		Pessoa obj = service.update(idPessoa, pessoa);
+		return ResponseEntity.ok().body(obj);
+	}
 
-	               Pessoa updated = repository.save(record);
-	               return ResponseEntity.ok().body(updated);
-	           }).orElse(ResponseEntity.notFound().build());
-	}
-	
-	@DeleteMapping(path ={"/{idPessoa}"})
-	public ResponseEntity <?> delete(@PathVariable Integer idPessoa) {
-	   return repository.findById(idPessoa)
-	           .map(record -> {
-	               repository.deleteById(idPessoa);
-	               return ResponseEntity.ok().build();
-	           }).orElse(ResponseEntity.notFound().build());
+	@DeleteMapping(value = "/{idPessoa}")
+	public ResponseEntity<Pessoa> delete(@PathVariable Integer idPessoa) {
+		service.delete(idPessoa); 
+		return ResponseEntity.noContent().build();
 	}
 
 }
