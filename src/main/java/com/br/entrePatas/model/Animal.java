@@ -27,11 +27,11 @@ public class Animal  implements Serializable {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ID_RACA")
-	private Raca idRaca;
+	private Raca raca;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ID_ESPECIE")
-	private Especie idEspecie;
+	private Especie especie;
 	
 	@Column(name = "NOME")
 	private String nome;
@@ -60,17 +60,18 @@ public class Animal  implements Serializable {
 	public void setIdAnimal(Integer idAnimal) {
 		this.idAnimal = idAnimal;
 	}
-	public Raca getIdRaca() {
-		return idRaca;
+	public Raca getRaca() {
+		return raca;
 	}
-	public void setIdRaca(Raca idRaca) {
-		this.idRaca = idRaca;
+	public void setRaca(Raca raca) {
+		this.raca = raca;
 	}
-	public Especie getIdEspecie() {
-		return idEspecie;
+	
+	public Especie getEspecie() {
+		return especie;
 	}
-	public void setIdEspecie(Especie idEspecie) {
-		this.idEspecie = idEspecie;
+	public void setEspecie(Especie especie) {
+		this.especie = especie;
 	}
 	public String getNome() {
 		return nome;

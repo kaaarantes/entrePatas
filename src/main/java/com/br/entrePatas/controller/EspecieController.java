@@ -13,17 +13,19 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.br.entrePatas.model.UF;
-import com.br.entrePatas.repository.UFRepository;
+import com.br.entrePatas.model.Especie;
+import com.br.entrePatas.repository.EspecieRepository;
+
+
 @RestController
-@RequestMapping({"/ufs"})
-public class UFController {
+@RequestMapping({"/especies"})
+public class EspecieController {
 
 	@Autowired
-	private UFRepository repository;
+	private EspecieRepository repository;
 	
-	UFController(UFRepository ufRepository) {
-		this.repository = ufRepository;
+	EspecieController(EspecieRepository especieRepository) {
+		this.repository = especieRepository;
 	}
 	
 	@GetMapping
@@ -31,38 +33,36 @@ public class UFController {
 	   return repository.findAll();
 	}
 	
-	@GetMapping(path = {"/{idUF}"})
-	public ResponseEntity findById(@PathVariable Integer idUF){
-	   return repository.findById(idUF)
+	@GetMapping(path = {"/{idEspecie}"})
+	public ResponseEntity findById(@PathVariable Integer idEspecie){
+	   return repository.findById(idEspecie)
 	           .map(record -> ResponseEntity.ok().body(record))
 	           .orElse(ResponseEntity.notFound().build());
 	}
 	
 	@PostMapping
-	public UF create(@RequestBody UF uf){
-	   return repository.save(uf);
+	public Especie create(@RequestBody Especie especie){
+	   return repository.save(especie);
 	}
 	
-	@PutMapping(value="/{idUF}")
-	public ResponseEntity update(@PathVariable("idUF") Integer idUF,
-	                                      @RequestBody UF uf) {
-	   return repository.findById(idUF)
+	@PutMapping(value="/{idEspecie}")
+	public ResponseEntity update(@PathVariable("idEspecie") Integer idEspecie,
+	                                      @RequestBody Especie especie) {
+	   return repository.findById(idEspecie)
 	           .map(record -> {
-	               record.setDescricao(uf.getDescricao());
-	               record.setUf(uf.getUf());
-	               record.setNrIBGE(uf.getNrIBGE());
-	               record.setFlgStatus(uf.getFlgStatus());
+	               record.setEspecie(especie.getEspecie());
+	               record.setFlgStatus(especie.getFlgStatus());
 
-	               UF updated = repository.save(record);
+	               Especie updated = repository.save(record);
 	               return ResponseEntity.ok().body(updated);
 	           }).orElse(ResponseEntity.notFound().build());
 	}
 	
-	@DeleteMapping(path ={"/{idUF}"})
-	public ResponseEntity <?> delete(@PathVariable Integer idUF) {
-	   return repository.findById(idUF)
+	@DeleteMapping(path ={"/{idEspecie}"})
+	public ResponseEntity <?> delete(@PathVariable Integer idEspecie) {
+	   return repository.findById(idEspecie)
 	           .map(record -> {
-	               repository.deleteById(idUF);
+	               repository.deleteById(idEspecie);
 	               return ResponseEntity.ok().build();
 	           }).orElse(ResponseEntity.notFound().build());
 	}

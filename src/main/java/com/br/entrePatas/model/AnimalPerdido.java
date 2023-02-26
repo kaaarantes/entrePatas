@@ -26,11 +26,11 @@ public class AnimalPerdido  implements Serializable {
 	
 	@OneToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL,optional = true)
 	@JoinColumn(name = "ID_PESSOA")
-	private Pessoa idPessoa;
+	private Pessoa pessoa;
 	
 	@OneToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL,optional = true)
 	@JoinColumn(name = "ID_ANIMAL")
-	private Animal idAnimal;
+	private Animal animal;
 	
 	@Column(name = "ANEXO")
 	private String anexo;
@@ -41,36 +41,46 @@ public class AnimalPerdido  implements Serializable {
 	@Column(nullable = false, name = "FLG_STATUS")
 	private Integer flgStatus;
 	
+	
+	/*------------------------------------------------*/
+	/*                  GETTERS E SETTERS             */
+	/*------------------------------------------------*/
+	
 	public Integer getIdAnimalPerdido() {
 		return idAnimalPerdido;
 	}
 	public void setIdAnimalPerdido(Integer idAnimalPerdido) {
 		this.idAnimalPerdido = idAnimalPerdido;
 	}
-	public Pessoa getIdPessoa() {
-		return idPessoa;
+	
+	public Pessoa getPessoa() {
+		return pessoa;
 	}
-	public void setIdPessoa(Pessoa idPessoa) {
-		this.idPessoa = idPessoa;
+	public void setPessoa(Pessoa pessoa) {
+		this.pessoa = pessoa;
 	}
-	public Animal getIdAnimal() {
-		return idAnimal;
+	
+	public Animal getAnimal() {
+		return animal;
 	}
-	public void setIdAnimal(Animal idAnimal) {
-		this.idAnimal = idAnimal;
+	public void setAnimal(Animal animal) {
+		this.animal = animal;
 	}
+	
 	public String getAnexo() {
 		return anexo;
 	}
 	public void setAnexo(String anexo) {
 		this.anexo = anexo;
 	}
+	
 	public String getObservacao() {
 		return observacao;
 	}
 	public void setObservacao(String observacao) {
 		this.observacao = observacao;
 	}
+	
 	public Integer getFlgStatus() {
 		return flgStatus;
 	}

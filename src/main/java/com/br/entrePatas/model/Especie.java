@@ -24,9 +24,6 @@ public class Especie  implements Serializable {
 	@Column(nullable = false, name = "ID_ESPECIE")
 	private Integer idEspecie;
 	
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<Animal> animal;
-	
 	@Column(nullable = false, name = "ESPECIE")
 	private String especie;
 	
@@ -39,12 +36,7 @@ public class Especie  implements Serializable {
 	public void setIdEspecie(Integer idEspecie) {
 		this.idEspecie = idEspecie;
 	}
-	public List<Animal> getAnimal() {
-		return animal;
-	}
-	public void setAnimal(List<Animal> animal) {
-		this.animal = animal;
-	}
+
 	public String getEspecie() {
 		return especie;
 	}

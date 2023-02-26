@@ -1,6 +1,7 @@
 package com.br.entrePatas.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -24,13 +25,12 @@ public class Acompanhamento  implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(nullable = false, name = "ID_ACOMPANHAMENTO")
 	private Integer idAcompanhamento;
-	/*
-	@OneToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL,optional = true)
-	@JoinColumn(name = "ID_PESSOA")
-	private Pessoa idPessoa;
 	
-	@OneToMany(mappedBy="acompanhamento", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-	private Animal idAnimal;*/
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Pessoa> pessoa;
+	
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Animal> animal;
 	
 	@Column(name = "OBSERVACAO")
 	private String observacao;
@@ -38,30 +38,38 @@ public class Acompanhamento  implements Serializable {
 	@Column(nullable = false, name = "FLG_STATUS")
 	private Integer flgStatus;
 	
+	
+	/*------------------------------------------------*/
+	/*                  GETTERS E SETTERS             */
+	/*------------------------------------------------*/
+	
 	public Integer getIdAcompanhamento() {
 		return idAcompanhamento;
 	}
 	public void setIdAcompanhamento(Integer idAcompanhamento) {
 		this.idAcompanhamento = idAcompanhamento;
 	}
-	/*public Pessoa getIdPessoa() {
-		return idPessoa;
+	
+	public List<Pessoa> getPessoa() {
+		return pessoa;
 	}
-	public void setIdPessoa(Pessoa idPessoa) {
-		this.idPessoa = idPessoa;
+	public void setPessoa(List<Pessoa> pessoa) {
+		this.pessoa = pessoa;
 	}
-	public Animal getIdAnimal() {
-		return idAnimal;
+	
+	public List<Animal> getAnimal() {
+		return animal;
 	}
-	public void setIdAnimal(Animal idAnimal) {
-		this.idAnimal = idAnimal;
-	}*/
+	public void setAnimal(List<Animal> animal) {
+		this.animal = animal;
+	}
 	public String getObservacao() {
 		return observacao;
 	}
 	public void setObservacao(String observacao) {
 		this.observacao = observacao;
 	}
+	
 	public Integer getFlgStatus() {
 		return flgStatus;
 	}

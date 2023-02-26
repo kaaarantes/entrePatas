@@ -1,6 +1,7 @@
 package com.br.entrePatas.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -12,6 +13,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -25,12 +27,12 @@ public class LarTemporario  implements Serializable {
 	@Column(nullable = false, name = "ID_LAR_TEMPORARIO")
 	private Integer idLarTemporario;
 	
-	/*@ManyToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL,optional = true)
 	@JoinColumn(name = "ID_PESSOA")
-	private Pessoa idPessoa;
+	private Pessoa pessoa;
 	
-	@OneToMany(mappedBy="larTemporario", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-	private Animal idAnimal;*/
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Animal> animal;
 	
 	@Column(name = "OBSERVACAO")
 	private String observacao;
@@ -38,30 +40,39 @@ public class LarTemporario  implements Serializable {
 	@Column(nullable = false, name = "FLG_STATUS")
 	private Integer flgStatus;
 	
+	
+	/*------------------------------------------------*/
+	/*                  GETTERS E SETTERS             */
+	/*------------------------------------------------*/
+	
 	public Integer getIdLarTemporario() {
 		return idLarTemporario;
 	}
 	public void setIdLarTemporario(Integer idLarTemporario) {
 		this.idLarTemporario = idLarTemporario;
 	}
-	/*public Pessoa getIdPessoa() {
-		return idPessoa;
+	
+	public Pessoa getPessoa() {
+		return pessoa;
 	}
-	public void setIdPessoa(Pessoa idPessoa) {
-		this.idPessoa = idPessoa;
+	public void setPessoa(Pessoa pessoa) {
+		this.pessoa = pessoa;
 	}
-	public Animal getIdAnimal() {
-		return idAnimal;
+	
+	public List<Animal> getAnimal() {
+		return animal;
 	}
-	public void setIdAnimal(Animal idAnimal) {
-		this.idAnimal = idAnimal;
-	}*/
+	public void setAnimal(List<Animal> animal) {
+		this.animal = animal;
+	}
+	
 	public String getObservacao() {
 		return observacao;
 	}
 	public void setObservacao(String observacao) {
 		this.observacao = observacao;
 	}
+	
 	public Integer getFlgStatus() {
 		return flgStatus;
 	}
