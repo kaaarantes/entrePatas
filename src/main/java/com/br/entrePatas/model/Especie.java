@@ -30,13 +30,14 @@ public class Especie  implements Serializable {
 	@Column(nullable = false, name = "FLG_STATUS")
 	private Integer flgStatus;
 	
+	
+	
 	public Integer getIdEspecie() {
 		return idEspecie;
 	}
 	public void setIdEspecie(Integer idEspecie) {
 		this.idEspecie = idEspecie;
 	}
-
 	public String getEspecie() {
 		return especie;
 	}
