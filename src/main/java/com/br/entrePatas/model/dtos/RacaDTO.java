@@ -1,8 +1,6 @@
 package com.br.entrePatas.model.dtos;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 
 import com.br.entrePatas.model.Raca;
 

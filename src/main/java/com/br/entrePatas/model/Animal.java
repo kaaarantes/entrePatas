@@ -54,6 +54,26 @@ public class Animal  implements Serializable {
 	@Column(nullable = false, name = "FLG_STATUS")
 	private Integer flgStatus;
 	
+	
+	public Animal() {
+		super();
+	}
+	
+	public Animal(Integer idAnimal, Raca raca, Especie especie, String nome, Date nascimento, String porte, String sexo,
+			Integer flgVacinado, Integer flgCastrado, Integer flgStatus) {
+		super();
+		this.idAnimal = idAnimal;
+		this.raca = raca;
+		this.especie = especie;
+		this.nome = nome;
+		this.nascimento = nascimento;
+		this.porte = porte;
+		this.sexo = sexo;
+		this.flgVacinado = flgVacinado;
+		this.flgCastrado = flgCastrado;
+		this.flgStatus = flgStatus;
+	}
+	
 	public Integer getIdAnimal() {
 		return idAnimal;
 	}
@@ -66,7 +86,6 @@ public class Animal  implements Serializable {
 	public void setRaca(Raca raca) {
 		this.raca = raca;
 	}
-	
 	public Especie getEspecie() {
 		return especie;
 	}

@@ -2,6 +2,7 @@ package com.br.entrePatas.controller;
 
 import java.net.URI;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.br.entrePatas.model.Especie;
+import com.br.entrePatas.model.dtos.EspecieDTO;
+import com.br.entrePatas.model.dtos.RacaDTO;
 import com.br.entrePatas.service.EspecieService;
 
 @RestController
@@ -26,28 +29,29 @@ public class EspecieController {
 	private EspecieService service;
 	
 	@GetMapping(value = "/{idEspecie}")
-	public ResponseEntity<Especie> findById(@PathVariable Integer idEspecie) {
+	public ResponseEntity<EspecieDTO> findById(@PathVariable Integer idEspecie) {
 		Especie obj = service.findById(idEspecie);
-		return ResponseEntity.ok().body(obj);
+		return ResponseEntity.ok().body(new EspecieDTO(obj));
 	}
 	
 	@GetMapping
-	public ResponseEntity<List<Especie>> findAll() {
+	public ResponseEntity<List<EspecieDTO>> findAll() {
 		List<Especie> list = service.findAll();
-		return ResponseEntity.ok().body(list);
+		List<EspecieDTO> listDTO = list.stream().map(obj -> new EspecieDTO(obj)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(listDTO);
 	}
 	
 	@PostMapping
-	public ResponseEntity<Especie> create(@RequestBody Especie especie) {
+	public ResponseEntity<EspecieDTO> create(@RequestBody EspecieDTO especie) {
 		Especie newObj = service.create(especie);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{idEspecie}").buildAndExpand(newObj.getIdEspecie()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
 	
 	@PutMapping(value = "/{idEspecie}")
-	public ResponseEntity<Especie> update(@PathVariable Integer idEspecie, @RequestBody Especie especie) {
+	public ResponseEntity<EspecieDTO> update(@PathVariable Integer idEspecie, @RequestBody EspecieDTO especie) {
 		Especie obj = service.update(idEspecie, especie);
-		return ResponseEntity.ok().body(obj);
+		return ResponseEntity.ok().body(new EspecieDTO(obj));
 	}
 
 	@DeleteMapping(value = "/{idEspecie}")

@@ -1,6 +1,8 @@
 package com.br.entrePatas.controller;
 
+import java.net.URI;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,10 +14,11 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.br.entrePatas.model.Animal;
-import com.br.entrePatas.repository.AnimalRepository;
-
+import com.br.entrePatas.model.dtos.AnimalDTO;
+import com.br.entrePatas.service.AnimalService;
 
 
 @RestController
@@ -23,56 +26,38 @@ import com.br.entrePatas.repository.AnimalRepository;
 public class AnimalController {
 
 	@Autowired
-	private AnimalRepository repository;
+	private AnimalService service;
 	
-	AnimalController(AnimalRepository animalRepository) {
-		this.repository = animalRepository;
+	@GetMapping(value = "/{idAnimal}")
+	public ResponseEntity<AnimalDTO> findById(@PathVariable Integer idAnimal) {
+		Animal obj = service.findById(idAnimal);
+		return ResponseEntity.ok().body(new AnimalDTO (obj));
 	}
 	
 	@GetMapping
-	public List findAll(){
-	   return repository.findAll();
-	}
-	
-	@GetMapping(path = {"/{idAnimal}"})
-	public ResponseEntity findById(@PathVariable Integer idAnimal){
-	   return repository.findById(idAnimal)
-	           .map(record -> ResponseEntity.ok().body(record))
-	           .orElse(ResponseEntity.notFound().build());
+	public ResponseEntity<List<AnimalDTO>> findAll() {
+		List<Animal> list = service.findAll();
+		List<AnimalDTO> listDTO = list.stream().map(obj -> new AnimalDTO(obj)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(listDTO);
 	}
 	
 	@PostMapping
-	public Animal create(@RequestBody Animal animal){
-	   return repository.save(animal);
+	public ResponseEntity<AnimalDTO> create(@RequestBody AnimalDTO animal) {
+		Animal newObj = service.create(animal);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{idAnimal}").buildAndExpand(newObj.getIdAnimal()).toUri();
+		return ResponseEntity.created(uri).build();
 	}
 	
-	@PutMapping(value="/{idAnimal}")
-	public ResponseEntity update(@PathVariable("idAnimal") Integer idAnimal,
-	                                      @RequestBody Animal animal) {
-	   return repository.findById(idAnimal)
-	           .map(record -> {
-	               record.setNome(animal.getNome());
-	               record.setNascimento(animal.getNascimento());
-	               record.setPorte(animal.getPorte());
-	               record.setSexo(animal.getSexo());
-	               record.setEspecie(animal.getEspecie());
-	               record.setRaca(animal.getRaca());
-	               record.setFlgCastrado(animal.getFlgCastrado());
-	               record.setFlgVacinado(animal.getFlgVacinado());
-	               record.setFlgStatus(animal.getFlgStatus());
+	@PutMapping(value = "/{idAnimal}")
+	public ResponseEntity<AnimalDTO> update(@PathVariable Integer idAnimal, @RequestBody AnimalDTO animal) {
+		Animal obj = service.update(idAnimal, animal);
+		return ResponseEntity.ok().body(new AnimalDTO(obj));
+	}
 
-	               Animal updated = repository.save(record);
-	               return ResponseEntity.ok().body(updated);
-	           }).orElse(ResponseEntity.notFound().build());
-	}
-	
-	@DeleteMapping(path ={"/{idAnimal}"})
-	public ResponseEntity <?> delete(@PathVariable Integer idAnimal) {
-	   return repository.findById(idAnimal)
-	           .map(record -> {
-	               repository.deleteById(idAnimal);
-	               return ResponseEntity.ok().build();
-	           }).orElse(ResponseEntity.notFound().build());
+	@DeleteMapping(value = "/{idAnimal}")
+	public ResponseEntity<Animal> delete(@PathVariable Integer idAnimal) {
+		service.delete(idAnimal); 
+		return ResponseEntity.noContent().build();
 	}
 
 }
