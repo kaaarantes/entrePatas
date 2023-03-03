@@ -1,12 +1,18 @@
 package com.br.entrePatas.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.br.entrePatas.model.dtos.RacaDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -29,6 +35,10 @@ public class Raca  implements Serializable {
 	@Column(nullable = false, name = "FLG_STATUS")
 	private Integer flgStatus;
 	
+	@JsonIgnore
+	@OneToMany(mappedBy = "raca")
+	private List<Animal> animais = new ArrayList<>();
+	
 	public Raca() {
 		super();
 	}
@@ -39,6 +49,14 @@ public class Raca  implements Serializable {
 		this.raca = raca;
 		this.observacao = observacao;
 		this.flgStatus = flgStatus;
+	}
+	
+	public Raca(RacaDTO obj) {
+		super();
+		this.idRaca = obj.getIdRaca();
+		this.raca = obj.getRaca();
+		this.observacao = obj.getObservacao();
+		this.flgStatus = obj.getFlgStatus();
 	}
 
 	public Integer getIdRaca() {
@@ -64,6 +82,14 @@ public class Raca  implements Serializable {
 	}
 	public void setFlgStatus(Integer flgStatus) {
 		this.flgStatus = flgStatus;
+	}
+
+	public List<Animal> getAnimais() {
+		return animais;
+	}
+
+	public void setAnimais(List<Animal> animais) {
+		this.animais = animais;
 	}
 
 }
