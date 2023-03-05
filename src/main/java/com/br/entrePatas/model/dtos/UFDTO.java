@@ -1,44 +1,23 @@
-package com.br.entrePatas.model;
+package com.br.entrePatas.model.dtos;
 
 import java.io.Serializable;
 
-import com.br.entrePatas.model.dtos.UFDTO;
+import com.br.entrePatas.model.UF;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-
-@Entity
-@Table(name = "UF")
-public class UF implements Serializable {
-	
+public class UFDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(nullable = false, name = "ID_UF")
 	private Integer idUF;
-	
-	@Column(nullable = false, name = "DESCRICAO")
 	private String descricao;
-	
-	@Column(nullable = false, name = "UF")
 	private String uf;
-	
-	@Column(nullable = false, name = "NR_IBGE")
 	private Integer nrIBGE;
-	
-	@Column(nullable = false, name = "FLG_STATUS")
 	private Integer flgStatus;
 	
-	public UF() {
+	public UFDTO() {
 		super();
 	}
 	
-	public UF(UFDTO obj) {
+	public UFDTO(UF obj) {
 		super();
 		this.idUF = obj.getIdUF();
 		this.descricao = obj.getDescricao();
@@ -77,5 +56,5 @@ public class UF implements Serializable {
 	public void setFlgStatus(Integer flgStatus) {
 		this.flgStatus = flgStatus;
 	}
-
+	
 }

@@ -1,81 +1,69 @@
-package com.br.entrePatas.model;
+package com.br.entrePatas.model.dtos;
 
 import java.io.Serializable;
 
-import com.br.entrePatas.model.dtos.DenunciaDTO;
+import com.br.entrePatas.model.Denuncia;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-
-@Entity
-@Table(name = "DENUNCIA")
-public class Denuncia  implements Serializable {
-	
+public class DenunciaDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(nullable = false, name = "ID_DENUNCIA")
 	private Integer idDenuncia;
-	
-	@Column(nullable = false, name = "DENUNCIA")
 	private String denuncia;
-	
-	@Column(name = "ANEXO")
-	private String anexo;
-	
-	@Column(name = "OBSERVACAO")
 	private String observacao;
-	
-	@Column(nullable = false, name = "FLG_STATUS")
+	private String anexo;
 	private Integer flgStatus;
 	
-	public Denuncia() {
+	public DenunciaDTO() {
 		super();
 	}
-	
-	public Denuncia(DenunciaDTO obj) {
+
+	public DenunciaDTO(Denuncia obj) {
 		super();
 		this.idDenuncia = obj.getIdDenuncia();
 		this.denuncia = obj.getDenuncia();
-		this.anexo = obj.getAnexo();
 		this.observacao = obj.getObservacao();
+		this.anexo = obj.getAnexo();
 		this.flgStatus = obj.getFlgStatus();
 	}
+
 	public Integer getIdDenuncia() {
 		return idDenuncia;
 	}
+
 	public void setIdDenuncia(Integer idDenuncia) {
 		this.idDenuncia = idDenuncia;
 	}
+
 	public String getDenuncia() {
 		return denuncia;
 	}
+
 	public void setDenuncia(String denuncia) {
 		this.denuncia = denuncia;
 	}
-	public String getAnexo() {
-		return anexo;
-	}
-	public void setAnexo(String anexo) {
-		this.anexo = anexo;
-	}
+
 	public String getObservacao() {
 		return observacao;
 	}
+
 	public void setObservacao(String observacao) {
 		this.observacao = observacao;
 	}
+
+	public String getAnexo() {
+		return anexo;
+	}
+
+	public void setAnexo(String anexo) {
+		this.anexo = anexo;
+	}
+
 	public Integer getFlgStatus() {
 		return flgStatus;
 	}
+
 	public void setFlgStatus(Integer flgStatus) {
 		this.flgStatus = flgStatus;
 	}
 	
-
 }

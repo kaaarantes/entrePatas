@@ -18,7 +18,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.br.entrePatas.model.Especie;
 import com.br.entrePatas.model.dtos.EspecieDTO;
-import com.br.entrePatas.model.dtos.RacaDTO;
 import com.br.entrePatas.service.EspecieService;
 
 @RestController

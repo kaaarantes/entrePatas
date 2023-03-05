@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.br.entrePatas.model.Pais;
+import com.br.entrePatas.model.dtos.PaisDTO;
 import com.br.entrePatas.repository.PaisRepository;
 import com.br.entrePatas.service.exception.ObjectnotFoundException;
 
@@ -25,14 +26,16 @@ public class PaisService {
 		return repository.findAll();
 	}
 	
-	public Pais create(Pais pais) {
-		return repository.save(pais);
+	public Pais create(PaisDTO objDTO) {
+		objDTO.setIdPais(null);
+		Pais newObj = new Pais(objDTO);
+		return repository.save(newObj);
 	}
 	
-	public Pais update(Integer idPais, Pais pais) {
+	public Pais update(Integer idPais, PaisDTO pais) {
 		pais.setIdPais(idPais);
 		Pais oldObj = findById(idPais);
-		oldObj = new Pais();
+		oldObj = new Pais(pais);
 		return repository.save(oldObj);
 	}
 	

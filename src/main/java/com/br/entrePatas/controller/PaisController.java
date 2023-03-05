@@ -1,6 +1,8 @@
 package com.br.entrePatas.controller;
 
+import java.net.URI;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,59 +14,48 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.br.entrePatas.model.Pais;
-import com.br.entrePatas.repository.PaisRepository;
+import com.br.entrePatas.model.dtos.PaisDTO;
+import com.br.entrePatas.service.PaisService;
 @RestController
 @RequestMapping({"/paises"})
 public class PaisController {
 
 	@Autowired
-	private PaisRepository repository;
+	private PaisService service;
 	
-	PaisController(PaisRepository paisRepository) {
-		this.repository = paisRepository;
+	@GetMapping(value = "/{idPais}")
+	public ResponseEntity<PaisDTO> findById(@PathVariable Integer idPais) {
+		Pais obj = service.findById(idPais);
+		return ResponseEntity.ok().body(new PaisDTO(obj));
 	}
 	
 	@GetMapping
-	public List findAll(){
-	   return repository.findAll();
-	}
-	
-	@GetMapping(path = {"/{idPais}"})
-	public ResponseEntity findById(@PathVariable Integer idPais){
-	   return repository.findById(idPais)
-	           .map(record -> ResponseEntity.ok().body(record))
-	           .orElse(ResponseEntity.notFound().build());
+	public ResponseEntity<List<PaisDTO>> findAll() {
+		List<Pais> list = service.findAll();
+		List<PaisDTO> listDTO = list.stream().map(obj -> new PaisDTO(obj)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(listDTO);
 	}
 	
 	@PostMapping
-	public Pais create(@RequestBody Pais pais){
-	   return repository.save(pais);
+	public ResponseEntity<PaisDTO> create(@RequestBody PaisDTO pais) {
+		Pais newObj = service.create(pais);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{idPais}").buildAndExpand(newObj.getIdPais()).toUri();
+		return ResponseEntity.created(uri).build();
 	}
 	
-	@PutMapping(value="/{idPais}")
-	public ResponseEntity update(@PathVariable("idPais") Integer idPais,
-	                                      @RequestBody Pais pais) {
-	   return repository.findById(idPais)
-	           .map(record -> {
-	               record.setDescricao(pais.getDescricao());
-	               record.setSigla(pais.getSigla());
-	               record.setNrBACEN(pais.getNrBACEN());
-	               record.setFlgStatus(pais.getFlgStatus());
+	@PutMapping(value = "/{idPais}")
+	public ResponseEntity<PaisDTO> update(@PathVariable Integer idPais, @RequestBody PaisDTO pais) {
+		Pais obj = service.update(idPais, pais);
+		return ResponseEntity.ok().body(new PaisDTO(obj));
+	}
 
-	               Pais updated = repository.save(record);
-	               return ResponseEntity.ok().body(updated);
-	           }).orElse(ResponseEntity.notFound().build());
-	}
-	
-	@DeleteMapping(path ={"/{idPais}"})
-	public ResponseEntity <?> delete(@PathVariable Integer idPais) {
-	   return repository.findById(idPais)
-	           .map(record -> {
-	               repository.deleteById(idPais);
-	               return ResponseEntity.ok().build();
-	           }).orElse(ResponseEntity.notFound().build());
+	@DeleteMapping(value = "/{idPais}")
+	public ResponseEntity<Pais> delete(@PathVariable Integer idPais) {
+		service.delete(idPais); 
+		return ResponseEntity.noContent().build();
 	}
 
 }

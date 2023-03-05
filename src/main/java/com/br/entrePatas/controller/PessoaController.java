@@ -2,6 +2,7 @@ package com.br.entrePatas.controller;
 
 import java.net.URI;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.br.entrePatas.model.Pessoa;
+import com.br.entrePatas.model.dtos.PessoaDTO;
 import com.br.entrePatas.service.PessoaService;
 
 @RestController
@@ -26,28 +28,29 @@ public class PessoaController {
 	private PessoaService service;
 	
 	@GetMapping(value = "/{idPessoa}")
-	public ResponseEntity<Pessoa> findById(@PathVariable Integer idPessoa) {
+	public ResponseEntity<PessoaDTO> findById(@PathVariable Integer idPessoa) {
 		Pessoa obj = service.findById(idPessoa);
-		return ResponseEntity.ok().body(obj);
+		return ResponseEntity.ok().body(new PessoaDTO (obj));
 	}
 	
 	@GetMapping
-	public ResponseEntity<List<Pessoa>> findAll() {
+	public ResponseEntity<List<PessoaDTO>> findAll() {
 		List<Pessoa> list = service.findAll();
-		return ResponseEntity.ok().body(list);
+		List<PessoaDTO> listDTO = list.stream().map(obj -> new PessoaDTO(obj)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(listDTO);
 	}
 	
 	@PostMapping
-	public ResponseEntity<Pessoa> create(@RequestBody Pessoa pessoa) {
+	public ResponseEntity<PessoaDTO> create(@RequestBody PessoaDTO pessoa) {
 		Pessoa newObj = service.create(pessoa);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{idPessoa}").buildAndExpand(newObj.getIdPessoa()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
 	
 	@PutMapping(value = "/{idPessoa}")
-	public ResponseEntity<Pessoa> update(@PathVariable Integer idPessoa, @RequestBody Pessoa pessoa) {
+	public ResponseEntity<PessoaDTO> update(@PathVariable Integer idPessoa, @RequestBody PessoaDTO pessoa) {
 		Pessoa obj = service.update(idPessoa, pessoa);
-		return ResponseEntity.ok().body(obj);
+		return ResponseEntity.ok().body(new PessoaDTO(obj));
 	}
 
 	@DeleteMapping(value = "/{idPessoa}")

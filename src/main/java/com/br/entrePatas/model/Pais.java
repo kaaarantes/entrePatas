@@ -1,16 +1,14 @@
 package com.br.entrePatas.model;
 
 import java.io.Serializable;
-import java.util.List;
 
-import jakarta.persistence.CascadeType;
+import com.br.entrePatas.model.dtos.PaisDTO;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -66,5 +64,18 @@ public class Pais  implements Serializable {
 	public void setFlgStatus(Integer flgStatus) {
 		this.flgStatus = flgStatus;
 	}
-
+	
+	public Pais() {
+		super();
+	}
+	
+	public Pais(PaisDTO obj) {
+		super();
+		this.idPais = obj.getIdPais();
+		this.sigla = obj.getSigla();
+		this.descricao = obj.getDescricao();
+		this.nrBACEN = obj.getNrBACEN();
+		this.flgStatus = obj.getFlgStatus();
+	}
+	
 }

@@ -71,7 +71,34 @@ public class Pessoa {
 	@Column(nullable = true, name = "FLG_STATUS")
 	private Integer flgStatus;
 	
+	public Pessoa() {
+		super();
+	}
 	
+	public Pessoa(Integer idPessoa, String nome, Date nascimento, String cpf, String rg, String telefone, String email,
+			String senha, Cidade cidade, Pais pais, String logradouro, String bairro, String numero, String complemento,
+			Integer cep, Integer flgLarTemporario, Integer flgStatus) {
+		super();
+		this.idPessoa = idPessoa;
+		this.nome = nome;
+		this.nascimento = nascimento;
+		this.cpf = cpf;
+		this.rg = rg;
+		this.telefone = telefone;
+		this.email = email;
+		this.senha = senha;
+		this.cidade = cidade;
+		this.pais = pais;
+		this.logradouro = logradouro;
+		this.bairro = bairro;
+		this.numero = numero;
+		this.complemento = complemento;
+		this.cep = cep;
+		this.flgLarTemporario = flgLarTemporario;
+		this.flgStatus = flgStatus;
+	}
+
+
 	public Integer getIdPessoa() {
 		return idPessoa;
 	}

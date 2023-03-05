@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.br.entrePatas.model.UF;
+import com.br.entrePatas.model.dtos.UFDTO;
 import com.br.entrePatas.repository.UFRepository;
 import com.br.entrePatas.service.exception.ObjectnotFoundException;
 
@@ -25,14 +26,16 @@ public class UFService {
 		return repository.findAll();
 	}
 	
-	public UF create(UF uf) {
-		return repository.save(uf);
+	public UF create(UFDTO objDTO) {
+		objDTO.setIdUF(null);
+		UF newObj = new UF(objDTO);
+		return repository.save(newObj);
 	}
 	
-	public UF update(Integer idUF, UF uf) {
+	public UF update(Integer idUF, UFDTO uf) {
 		uf.setIdUF(idUF);
 		UF oldObj = findById(idUF);
-		oldObj = new UF();
+		oldObj = new UF(uf);
 		return repository.save(oldObj);
 	}
 	
