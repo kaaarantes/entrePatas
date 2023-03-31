@@ -2,7 +2,9 @@ package com.br.entrePatas.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -11,6 +13,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 
@@ -32,6 +36,13 @@ public class Animal  implements Serializable {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ID_ESPECIE")
 	private Especie especie;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ID_ADOCAO")
+	private Adocao adocao;
+	
+	@OneToMany(mappedBy="animal", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<AnimalFoto> animalFotos;
 	
 	@Column(name = "NOME")
 	private String nome;
@@ -59,12 +70,13 @@ public class Animal  implements Serializable {
 		super();
 	}
 	
-	public Animal(Integer idAnimal, Raca raca, Especie especie, String nome, Date nascimento, String porte, String sexo,
+	public Animal(Integer idAnimal, Raca raca, Especie especie, List<AnimalFoto> animalFotos, String nome, Date nascimento, String porte, String sexo,
 			Integer flgVacinado, Integer flgCastrado, Integer flgStatus) {
 		super();
 		this.idAnimal = idAnimal;
 		this.raca = raca;
 		this.especie = especie;
+		this.animalFotos = animalFotos;
 		this.nome = nome;
 		this.nascimento = nascimento;
 		this.porte = porte;
@@ -91,6 +103,12 @@ public class Animal  implements Serializable {
 	}
 	public void setEspecie(Especie especie) {
 		this.especie = especie;
+	}
+	public List<AnimalFoto> getAnimalFotos() {
+		return animalFotos;
+	}
+	public void setAnimalFotos(List<AnimalFoto> animalFotos) {
+		this.animalFotos = animalFotos;
 	}
 	public String getNome() {
 		return nome;

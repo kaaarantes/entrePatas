@@ -1,15 +1,26 @@
 package com.br.entrePatas.model;
 
+import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
+@Entity
 @Table(name = "ADOCAO")
-public class Adocao {
+public class Adocao implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,10 +30,12 @@ public class Adocao {
 	@Column(name = "APRESENTACAO")
 	private String apresentacao;
 	
-	@Column(name = "ID_PESSOA")
-	private Pessoa adotante;
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ID_PESSOA")
+	private Pessoa pessoa;
 	
-	@Column(name = "ID_ANIMAL")
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ID_ANIMAL")
 	private Animal animal;
 	
 	@Column(name = "DATA_ADOCAO")
@@ -32,11 +45,11 @@ public class Adocao {
 		super();
 	}
 
-	public Adocao(Integer idAdocao, String apresentacao, Pessoa adotante, Animal animal, Date dataAdocao) {
+	public Adocao(Integer idAdocao, String apresentacao, Pessoa pessoa, Animal animal, Date dataAdocao) {
 		super();
 		this.idAdocao = idAdocao;
 		this.apresentacao = apresentacao;
-		this.adotante = adotante;
+		this.pessoa = pessoa;
 		this.animal = animal;
 		this.dataAdocao = dataAdocao;
 	}
@@ -57,12 +70,12 @@ public class Adocao {
 		this.apresentacao = apresentacao;
 	}
 
-	public Pessoa getAdotante() {
-		return adotante;
+	public Pessoa getPessoa() {
+		return pessoa;
 	}
 
-	public void setAdotante(Pessoa adotante) {
-		this.adotante = adotante;
+	public void setPessoa(Pessoa pessoa) {
+		this.pessoa = pessoa;
 	}
 
 	public Animal getAnimal() {
