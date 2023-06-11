@@ -20,7 +20,7 @@ public class AnimalDTO implements Serializable{
 	private Integer especie;
 	private String nomeRaca;
 	private String nomeEspecie;
-	
+	private byte[] animalFoto;	
 	
 	public AnimalDTO() {
 		super();
@@ -40,6 +40,7 @@ public class AnimalDTO implements Serializable{
 		this.especie = obj.getEspecie().getIdEspecie();
 		this.nomeRaca = obj.getRaca().getRaca();
 		this.nomeEspecie = obj.getEspecie().getEspecie();
+		this.animalFoto = obj.getAnimalFoto();
 	}
 
 
@@ -114,6 +115,12 @@ public class AnimalDTO implements Serializable{
 	}
 	public void setNomeEspecie(String nomeEspecie) {
 		this.nomeEspecie = nomeEspecie;
+	}
+	public byte[] getAnimalFoto() {
+		return animalFoto;
+	}
+	public void setAnimalFoto(byte[] animalFoto) {
+		this.animalFoto = animalFoto;
 	}
 
 }

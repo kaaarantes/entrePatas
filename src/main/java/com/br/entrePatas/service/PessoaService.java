@@ -23,6 +23,8 @@ public class PessoaService {
 	private CidadeService cidadeService;
 	@Autowired
 	private PaisService paisService;
+	
+	//private BCryptPasswordEncoder encoder;
 
 	public Pessoa findById(Integer idPessoa) {
 		Optional<Pessoa> obj = pessoaRepository.findById(idPessoa);
@@ -34,6 +36,8 @@ public class PessoaService {
 	}
 
 	public Pessoa create(PessoaDTO pessoa) {
+		pessoa.setIdPessoa(null);
+		//pessoa.setSenha(encoder.encode(pessoa.getSenha()));
 		return pessoaRepository.save(newPessoa(pessoa));
 	}
 

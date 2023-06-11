@@ -1,5 +1,6 @@
 package com.br.entrePatas.service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -50,19 +51,25 @@ public class AdocaoService {
 	
 	private Adocao newAdocao(AdocaoDTO obj) {
 		Animal animal = animalService.findById(obj.getAnimal());
-		Pessoa pessoa = pessoaService.findById(obj.getPessoa());
 		
 		Adocao adocao = new Adocao();
 		if(obj.getIdAdocao() != null) {
 			adocao.setIdAdocao(obj.getIdAdocao());
 		}
 		
-		adocao.setPessoa(pessoa);
 		adocao.setAnimal(animal);
 		adocao.setApresentacao(obj.getApresentacao());
 		adocao.setDataAdocao(obj.getDataAdocao());
 
 		return adocao;
+	}
+	
+	public Adocao adotar(Integer idAdocao, AdocaoDTO adocao) {
+		adocao.setIdAdocao(idAdocao);
+		Adocao oldObj = findById(idAdocao);
+		oldObj = newAdocao(adocao);
+		adocao.setDataAdocao(new Date());
+		return adocaoRepository.save(oldObj);
 	}
 
 }

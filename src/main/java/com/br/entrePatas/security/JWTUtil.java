@@ -1,57 +1,85 @@
 package com.br.entrePatas.security;
-
-/*import java.util.Date;
+/*
+import java.security.Key;
+import java.util.Date;
+import java.util.Map;
+import java.util.function.Function;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Service;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
 
-@Component
+@Service
 public class JWTUtil {
-	
-	@Value("${jwt.expiration}")
-	private Long expiration;
-	
-	@Value("${jwt.secret}")
-	private String secret;
+    @Value("${jwt.secret:SECRET_KEY}")
+    private String SECRET_KEY;
+    @Value("${jwt.expiration:EXPIRATION}")
+    private Integer EXPIRATION;
 
-	public String generateToken(String email) {
-		return Jwts.builder()
-				.setSubject(email)
-				.setExpiration(new Date(System.currentTimeMillis() + expiration))
-				.signWith(SignatureAlgorithm.HS512, secret.getBytes())
-				.compact();
-	}
+    // Extrai o Username, no caso o email
+    public String extrairUsername(String tokenJwt) {
+        return extrairClaim(tokenJwt, Claims::getSubject);
+    }
 
-	public boolean tokenValido(String token) {
-		Claims claims = getClaims(token);
-		if(claims != null) {
-			String username = claims.getSubject();
-			Date expirationDate = claims.getExpiration();
-			Date now = new Date(System.currentTimeMillis());
-			if(username != null && expirationDate != null && now.before(expirationDate)) {
-				return true;
-			}
-		}
-		return false;
-	}
+    // Extrai qualquer claims do tokenJWT
+    public <T> T extrairClaim(String tokenJwt, Function<Claims, T> claimsResolver){
+        final Claims claims = extrairTodasClaims(tokenJwt);
+        return claimsResolver.apply(claims);
+    }
 
-	private Claims getClaims(String token) {
-		try {
-			return Jwts.parser().setSigningKey(secret.getBytes()).parseClaimsJws(token).getBody();
-		} catch (Exception e) {
-			return null;
-		}
-	}
 
-	public String getUsername(String token) {
-		Claims claims = getClaims(token);
-		if(claims != null) {
-			return claims.getSubject();
-		}
+    // Gera o token JWT com Claims extras
+    public String generateToken(UserDetails userDetails){
+        return Jwts.builder()
+                .setClaims(extrairTodasClaims(null))
+                .setSubject(userDetails.getUsername())
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION))
+                .signWith(getSignInKey(), SignatureAlgorithm.HS256)
+                .compact();
+    }
+
+    // Verifica se o username do Token e o mesmo do usuario cadastrado
+    // Verifica se o token nao esta espirado
+    public boolean isTokenValid(String tokenJwt, UserDetails userDetails){
+        final String username = extrairUsername(tokenJwt);
+        return (username.equals(userDetails.getUsername())) && !isTokenExpired(tokenJwt);
+    }
+
+    // Informa se o token esta expirado
+    private boolean isTokenExpired(String tokenJwt) {
+        return extrairExpiration(tokenJwt).before(new Date());
+    }
+
+    // Extrai a data de expiracao do token
+    private Date extrairExpiration(String tokenJwt) {
+        return extrairClaim(tokenJwt, Claims::getExpiration);
+    }
+
+    // Extrai todas as claims do tokenJWT
+    private Claims extrairTodasClaims(String tokenJwt){
+        return Jwts
+                .parserBuilder()
+                .setSigningKey(getSignInKey())
+                .build()
+                .parseClaimsJws(tokenJwt)
+                .getBody();
+    }
+
+    // Decodifica a chave de login
+    private Key getSignInKey() {
+        byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
+        return Keys.hmacShaKeyFor(keyBytes);
+    }
+
+	public String generateToken(String username) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 }*/

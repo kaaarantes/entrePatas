@@ -53,6 +53,12 @@ public class AdocaoController {
 		Adocao obj = service.update(idAdocao, adocao);
 		return ResponseEntity.ok().body(new AdocaoDTO(obj));
 	}
+	
+	@PostMapping(value = "/{idAdocao}")
+	public ResponseEntity<AdocaoDTO> adotar(@PathVariable Integer idAdocao, @RequestBody AdocaoDTO adocao) {
+		Adocao obj = service.adotar(idAdocao, adocao);
+		return ResponseEntity.ok().body(new AdocaoDTO(obj));
+	}
 
 	@DeleteMapping(value = "/{idAdocao}")
 	public ResponseEntity<Adocao> delete(@PathVariable Integer idAdocao) {

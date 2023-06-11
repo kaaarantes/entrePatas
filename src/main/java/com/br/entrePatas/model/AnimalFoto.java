@@ -28,7 +28,7 @@ public class AnimalFoto  implements Serializable {
 		/*------------------------------------------------*/
 		@Id
 		@GeneratedValue(strategy = GenerationType.SEQUENCE)
-		@Column(nullable = false, name = "ID_ANIMAL_FOTO")
+		@Column(name = "ID_ANIMAL_FOTO")
 		private Integer idAnimalFoto;
 		
 		@ManyToOne(fetch = FetchType.LAZY)

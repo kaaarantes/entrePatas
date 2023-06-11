@@ -1,6 +1,6 @@
 package com.br.entrePatas.security;
-
-/*import java.io.IOException;
+/*
+import java.io.IOException;
 
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

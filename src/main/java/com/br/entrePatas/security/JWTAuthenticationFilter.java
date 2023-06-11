@@ -1,6 +1,6 @@
 package com.br.entrePatas.security;
-
-/*import java.io.IOException;
+/*
+import java.io.IOException;
 import java.util.Date;
 
 import org.springframework.security.authentication.AuthenticationManager;
@@ -9,7 +9,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.br.entrePatas.model.Credenciais;
+import com.br.entrePatas.model.dtos.CredencialDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.servlet.FilterChain;
@@ -19,8 +19,8 @@ import jakarta.servlet.http.HttpServletResponse;
 
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 	
-	private AuthenticationManager authenticationManager;
-	private JWTUtil jwtUtil;
+	private final AuthenticationManager authenticationManager;
+	private final JWTUtil jwtUtil;
 	
 	public JWTAuthenticationFilter(AuthenticationManager authenticationManager, JWTUtil jwtUtil) {
 		super();
@@ -32,7 +32,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
 			throws AuthenticationException {
 		try {
-			Credenciais creds = new ObjectMapper().readValue(request.getInputStream(), Credenciais.class);
+			CredencialDTO creds = new ObjectMapper().readValue(request.getInputStream(), CredencialDTO.class);
 			UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(creds.getEmail(), creds.getSenha());
 			Authentication authentication = authenticationManager.authenticate(authenticationToken);
 			return authentication;

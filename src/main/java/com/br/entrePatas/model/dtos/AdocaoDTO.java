@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.Date;
 
 import com.br.entrePatas.model.Adocao;
-import com.br.entrePatas.model.Animal;
 
 public class AdocaoDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
@@ -16,6 +15,7 @@ public class AdocaoDTO implements Serializable{
 	private Integer animal;
 	private String nomeAnimal;
 	private Date dataAdocao;
+	private byte[] animalFoto;
 	
 	public AdocaoDTO() {
 		super();
@@ -25,11 +25,10 @@ public class AdocaoDTO implements Serializable{
 		super();
 		this.idAdocao = obj.getIdAdocao();
 		this.apresentacao = obj.getApresentacao();
-		this.pessoa = obj.getPessoa().getIdPessoa();
-		this.nomePessoa = obj.getPessoa().getNome();
 		this.animal = obj.getAnimal().getIdAnimal();
 		this.nomeAnimal = obj.getAnimal().getNome();
 		this.dataAdocao = obj.getDataAdocao();
+		this.animalFoto = obj.getAnimal().getAnimalFoto();
 	}
 
 	public Integer getIdAdocao() {
@@ -86,6 +85,14 @@ public class AdocaoDTO implements Serializable{
 
 	public void setDataAdocao(Date dataAdocao) {
 		this.dataAdocao = dataAdocao;
+	}
+
+	public byte[] getAnimalFoto() {
+		return animalFoto;
+	}
+
+	public void setAnimalFoto(byte[] animalFoto) {
+		this.animalFoto = animalFoto;
 	}
 
 

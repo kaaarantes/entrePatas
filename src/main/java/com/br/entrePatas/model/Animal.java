@@ -41,8 +41,8 @@ public class Animal  implements Serializable {
 	@JoinColumn(name = "ID_ADOCAO")
 	private Adocao adocao;
 	
-	@OneToMany(mappedBy="animal", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<AnimalFoto> animalFotos;
+	@Column(name = "ID_FOTO")
+	private byte[] animalFoto;
 	
 	@Column(name = "NOME")
 	private String nome;
@@ -70,13 +70,13 @@ public class Animal  implements Serializable {
 		super();
 	}
 	
-	public Animal(Integer idAnimal, Raca raca, Especie especie, List<AnimalFoto> animalFotos, String nome, Date nascimento, String porte, String sexo,
+	public Animal(Integer idAnimal, Raca raca, Especie especie, byte[] animalFoto, String nome, Date nascimento, String porte, String sexo,
 			Integer flgVacinado, Integer flgCastrado, Integer flgStatus) {
 		super();
 		this.idAnimal = idAnimal;
 		this.raca = raca;
 		this.especie = especie;
-		this.animalFotos = animalFotos;
+		this.animalFoto = animalFoto;
 		this.nome = nome;
 		this.nascimento = nascimento;
 		this.porte = porte;
@@ -104,11 +104,11 @@ public class Animal  implements Serializable {
 	public void setEspecie(Especie especie) {
 		this.especie = especie;
 	}
-	public List<AnimalFoto> getAnimalFotos() {
-		return animalFotos;
+	public byte[] getAnimalFoto() {
+		return animalFoto;
 	}
-	public void setAnimalFotos(List<AnimalFoto> animalFotos) {
-		this.animalFotos = animalFotos;
+	public void setAnimalFotos(byte[] animalFoto) {
+		this.animalFoto = animalFoto;
 	}
 	public String getNome() {
 		return nome;
